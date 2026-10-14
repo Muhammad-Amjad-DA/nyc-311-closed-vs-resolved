@@ -20,4 +20,4 @@ This folder checks them against **my own hand labels** on 100 notes.
 | `other` | none of the above fits |
 
 ## Result
-_Not yet scored. Fill the `your_label` column, run the scoring script, and paste the output here._
+**Status: sheet drawn, labels not yet entered, so the rules are not yet validated.** Once the sheet is labelled, running the scorer writes `validation/RESULT.md` and that file is linked from the main README.
