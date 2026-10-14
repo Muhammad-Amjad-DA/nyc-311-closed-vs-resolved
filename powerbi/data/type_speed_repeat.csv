@@ -1,0 +1,32 @@
+complaint_type,complaint_family,closed_tickets,refiled_30d,median_hours_to_close
+Noise - Residential,behaviour,405162,294447,1.2
+Abandoned Vehicle,behaviour,63248,20768,2.1
+Illegal Parking,behaviour,532870,313727,1.5
+Blocked Driveway,behaviour,156259,51983,1.7
+Noise,behaviour,35851,9892,66.8
+Missed Collection,condition,39593,4860,55.4
+Vendor Enforcement,behaviour,27596,18809,0.3
+HEAT/HOT WATER,condition,182033,127507,39.4
+Noise - Street/Sidewalk,behaviour,168212,97537,0.9
+Noise - Vehicle,behaviour,40085,17857,1.0
+Dirty Condition,condition,55977,14642,23.3
+UNSANITARY CONDITION,condition,101173,40519,254.5
+WATER LEAK,condition,32403,9051,238.4
+Street Condition,condition,47892,19077,26.0
+FLOORING/STAIRS,condition,22828,5876,241.2
+Water System,condition,43794,10901,3.5
+Damaged Tree,condition,22310,1905,118.8
+DOOR/WINDOW,condition,37932,11208,287.3
+General Construction/Plumbing,condition,26879,6138,121.3
+Drug Activity,behaviour,27439,24527,0.5
+Sidewalk Condition,condition,23338,2667,189.0
+Illegal Dumping,condition,36229,6869,69.4
+Non-Emergency Police Matter,behaviour,22831,11025,1.1
+Derelict Vehicles,condition,37227,7119,21.0
+Noise - Commercial,behaviour,59959,41232,0.9
+PLUMBING,condition,57368,19136,192.1
+PAINT/PLASTER,condition,51458,16647,171.9
+Encampment,behaviour,41905,22232,1.8
+Homeless Person Assistance,behaviour,25692,10169,5.1
+ELECTRIC,condition,25944,6172,169.8
+GENERAL,condition,26296,7885,316.9
