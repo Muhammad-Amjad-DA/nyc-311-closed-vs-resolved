@@ -35,4 +35,13 @@ save("heat_building_concentration.csv", """
 save("heat_monthly.csv", """
  SELECT DATE_TRUNC('month', closed_date)::DATE AS closed_month, COUNT(*) AS closed_tickets,
         SUM(refiled_30d::INT) AS refiled_30d FROM refiled WHERE complaint_type='HEAT/HOT WATER' GROUP BY 1""")
+# Page 3: how agencies close tickets (all closed tickets, incl. duplicates and no-text)
+save("closure_by_agency_outcome.csv", """
+ SELECT agency, outcome, COUNT(*) AS closed_tickets FROM tickets WHERE status='Closed' GROUP BY 1, 2""")
+# Page 3: speed vs repeat, by complaint type (types with at least 20,000 in-scope closed tickets)
+save("type_speed_repeat.csv", """
+ WITH s AS (SELECT complaint_type, MEDIAN(hours_to_close) AS median_hours_to_close FROM tickets WHERE status='Closed' GROUP BY 1)
+ SELECT r.complaint_type, ANY_VALUE(r.complaint_family) AS complaint_family, COUNT(*) AS closed_tickets,
+        SUM(r.refiled_30d::INT) AS refiled_30d, ROUND(ANY_VALUE(s.median_hours_to_close), 1) AS median_hours_to_close
+ FROM refiled r JOIN s USING (complaint_type) GROUP BY r.complaint_type HAVING COUNT(*) >= 20000""")
 print("ok")
