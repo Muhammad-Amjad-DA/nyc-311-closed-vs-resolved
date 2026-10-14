@@ -1,0 +1,53 @@
+-- Measures for the NYC 311 report. Table names match the CSV files in powerbi/data.
+
+Closed Tickets =
+SUM ( refile_by_type_outcome_month[closed_tickets] )
+
+Refiled 30d =
+SUM ( refile_by_type_outcome_month[refiled_30d] )
+
+Refile Rate 30d =
+DIVIDE ( [Refiled 30d], [Closed Tickets] )
+
+Refile Rate 7d =
+DIVIDE ( SUM ( refile_by_type_outcome_month[refiled_7d] ), [Closed Tickets] )
+
+Refile Rate 14d =
+DIVIDE ( SUM ( refile_by_type_outcome_month[refiled_14d] ), [Closed Tickets] )
+
+Behaviour Refile Rate =
+CALCULATE ( [Refile Rate 30d], refile_by_type_outcome_month[complaint_family] = "behaviour" )
+
+Condition Refile Rate =
+CALCULATE ( [Refile Rate 30d], refile_by_type_outcome_month[complaint_family] = "condition" )
+
+Heat Refile Rate =
+CALCULATE ( [Refile Rate 30d], refile_by_type_outcome_month[complaint_type] = "HEAT/HOT WATER" )
+
+Closed Outcome Share =
+DIVIDE (
+    SUM ( closure_outcomes[closed_tickets] ),
+    CALCULATE ( SUM ( closure_outcomes[closed_tickets] ), ALL ( closure_outcomes[outcome] ) )
+)
+
+Heat Buildings =
+MAX ( heat_building_concentration[n_buildings] )
+
+Heat Repeats =
+MAX ( heat_building_concentration[total_repeats] )
+
+Cumulative Repeat Share =
+DIVIDE ( MAX ( heat_building_concentration[cumulative_repeats] ), [Heat Repeats] )
+
+Top 1000 Share =
+CALCULATE (
+    DIVIDE ( MAX ( heat_building_concentration[cumulative_repeats] ), [Heat Repeats] ),
+    heat_building_concentration[building_rank] = 1000
+)
+
+Heat Monthly Refile Rate =
+DIVIDE ( SUM ( heat_monthly[refiled_30d] ), SUM ( heat_monthly[closed_tickets] ) )
+
+-- Scenario: repeats avoided if the top 1,000 buildings cut repeats by X%. Create a "Reduction %" what-if parameter (10% to 25%).
+Repeats Avoided =
+[Top 1000 Share] * [Heat Repeats] * 'Reduction %'[Reduction % Value]
