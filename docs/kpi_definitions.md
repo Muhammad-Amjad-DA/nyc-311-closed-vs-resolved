@@ -11,5 +11,5 @@ One definition per KPI. If a number in this repo does not match one of these, it
 | In-scope closed ticket | Closed, has an address, not closed as a duplicate, closed between 2025-01-01 and 2025-11-30 (so a full 30-day follow-up window exists in the data) | 2,954,866 |
 | **Re-filed within 30 days** | An in-scope ticket is re-filed if a NEW request with the same address and the same complaint type was created after its closure and within 30 days | 46.5% overall |
 | Complaint family | `behaviour`: NYPD tickets, noise, drug activity, vendor enforcement, encampment, homeless assistance, blocked driveway. `condition`: everything else (heat, plumbing, leaks, street condition...) | - |
-| Re-file reading | `behaviour` re-files mean the behaviour recurred. They are **not** read as failed closure. `condition` re-files suggest the physical problem was not fixed | behaviour 57.7%, condition 32.0% |
+| Re-file reading | `behaviour` re-files mean the behaviour recurred. They are **not** read as failed closure. `condition` re-files suggest the problem persisted or came back. They do not prove the original fix failed | behaviour 57.7%, condition 32.0% |
 | Repeat tickets (building level) | Sum of re-filed flags for heat / hot water tickets by address | 127,507 across 34,552 buildings |

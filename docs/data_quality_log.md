@@ -10,6 +10,6 @@ Source: NYC Open Data, *311 Service Requests from 2010 to Present* (dataset `erm
 | 4 | Missing address | 122,913 (3.4%) | Excluded from the re-file analysis (cannot match locations) | Re-file results cover address-based complaints only |
 | 5 | Borough missing or "Unspecified" | 2,607 | Set to blank. Borough is not used in headline numbers | None |
 | 6 | Missing or "N/A" resolution text | 39,608 missing, 30,503 "N/A" | Outcome bucket `no_resolution_text` | 1.1% of closed tickets |
-| 7 | Closing text varies in wording across agencies (769 distinct texts) | all closed | Keyword rules map text to 8 outcome buckets. 'other' started at 13.4% and was reduced to 7.1% after reading the top unmatched texts | **Rules are not validated against a hand-labelled sample** (see limitations) |
+| 7 | Closing text varies in wording across agencies (769 distinct texts) | all closed | Keyword rules map text to 8 outcome buckets. 'other' started at 13.4% and was reduced to 7.1% after reading the top unmatched texts | **Rules are not yet validated against a hand-labelled sample.** Workflow in `validation/` (see limitations) |
 | 8 | Duplicates closed by the agency ("a duplicate of a previously filed complaint") | 144,383 closed tickets | Excluded from the re-file scope. Otherwise they would count as instant re-files | Prevents inflating the rate |
 | 9 | Tickets closed in December 2025 | - | Excluded from the re-file scope (no complete 30-day follow-up) | Avoids understating re-files |
