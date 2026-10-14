@@ -1,53 +1,86 @@
--- Measures for the NYC 311 report. Table names match the CSV files in powerbi/data.
+-- NYC 311 report measures. Create a blank table named _Measures and add these there.
+-- Table names equal the CSV file names in powerbi/data (no spaces).
 
-Closed Tickets =
+---------- Re-file measures (table: refile_by_type_outcome_month) ----------
+Closed Tickets (in scope) =
 SUM ( refile_by_type_outcome_month[closed_tickets] )
 
 Refiled 30d =
 SUM ( refile_by_type_outcome_month[refiled_30d] )
 
 Refile Rate 30d =
-DIVIDE ( [Refiled 30d], [Closed Tickets] )
+DIVIDE ( [Refiled 30d], [Closed Tickets (in scope)] )
 
-Refile Rate 7d =
-DIVIDE ( SUM ( refile_by_type_outcome_month[refiled_7d] ), [Closed Tickets] )
+Heat Refile Rate 7d =
+CALCULATE ( DIVIDE ( SUM ( refile_by_type_outcome_month[refiled_7d] ), [Closed Tickets (in scope)] ),
+            refile_by_type_outcome_month[complaint_type] = "HEAT/HOT WATER" )
 
-Refile Rate 14d =
-DIVIDE ( SUM ( refile_by_type_outcome_month[refiled_14d] ), [Closed Tickets] )
+Heat Refile Rate 14d =
+CALCULATE ( DIVIDE ( SUM ( refile_by_type_outcome_month[refiled_14d] ), [Closed Tickets (in scope)] ),
+            refile_by_type_outcome_month[complaint_type] = "HEAT/HOT WATER" )
 
-Behaviour Refile Rate =
-CALCULATE ( [Refile Rate 30d], refile_by_type_outcome_month[complaint_family] = "behaviour" )
-
-Condition Refile Rate =
-CALCULATE ( [Refile Rate 30d], refile_by_type_outcome_month[complaint_family] = "condition" )
-
-Heat Refile Rate =
+Heat Refile Rate 30d =
 CALCULATE ( [Refile Rate 30d], refile_by_type_outcome_month[complaint_type] = "HEAT/HOT WATER" )
 
-Closed Outcome Share =
-DIVIDE (
-    SUM ( closure_outcomes[closed_tickets] ),
-    CALCULATE ( SUM ( closure_outcomes[closed_tickets] ), ALL ( closure_outcomes[outcome] ) )
-)
+---------- Closing outcomes (table: closure_outcomes) ----------
+Closed Tickets (all) =
+SUM ( closure_outcomes[closed_tickets] )
 
+Closed Outcome Share =
+DIVIDE ( [Closed Tickets (all)], CALCULATE ( [Closed Tickets (all)], ALL ( closure_outcomes[outcome] ) ) )
+
+Action Taken Share =
+CALCULATE ( [Closed Outcome Share], closure_outcomes[outcome] = "action_taken" )
+
+No Finding Share =
+CALCULATE ( [Closed Outcome Share], closure_outcomes[outcome] = "no_finding" )
+
+Could Not Reach Share =
+CALCULATE ( [Closed Outcome Share], closure_outcomes[outcome] = "could_not_reach_or_gone" )
+
+---------- Heat concentration (table: heat_building_concentration) ----------
 Heat Buildings =
 MAX ( heat_building_concentration[n_buildings] )
 
-Heat Repeats =
+Heat Repeat Tickets =
 MAX ( heat_building_concentration[total_repeats] )
 
 Cumulative Repeat Share =
-DIVIDE ( MAX ( heat_building_concentration[cumulative_repeats] ), [Heat Repeats] )
+DIVIDE ( MAX ( heat_building_concentration[cumulative_repeats] ), [Heat Repeat Tickets] )
 
 Top 1000 Share =
-CALCULATE (
-    DIVIDE ( MAX ( heat_building_concentration[cumulative_repeats] ), [Heat Repeats] ),
-    heat_building_concentration[building_rank] = 1000
-)
+CALCULATE ( [Cumulative Repeat Share], heat_building_concentration[building_rank] = 1000 )
+
+---------- Heat seasonality (table: heat_monthly) ----------
+Heat Closed Tickets =
+SUM ( heat_monthly[closed_tickets] )
 
 Heat Monthly Refile Rate =
-DIVIDE ( SUM ( heat_monthly[refiled_30d] ), SUM ( heat_monthly[closed_tickets] ) )
+DIVIDE ( SUM ( heat_monthly[refiled_30d] ), [Heat Closed Tickets] )
 
--- Scenario: repeats avoided if the top 1,000 buildings cut repeats by X%. Create a "Reduction %" what-if parameter (10% to 25%).
-Repeats Avoided =
-[Top 1000 Share] * [Heat Repeats] * 'Reduction %'[Reduction % Value]
+---------- Closure quality (tables: closure_by_agency_outcome, type_speed_repeat) ----------
+Agency Closed Tickets =
+SUM ( closure_by_agency_outcome[closed_tickets] )
+
+Agency Outcome Share =
+DIVIDE ( [Agency Closed Tickets], CALCULATE ( [Agency Closed Tickets], ALLEXCEPT ( closure_by_agency_outcome, closure_by_agency_outcome[agency] ) ) )
+
+Heat Caller-Said-Fixed Share =
+DIVIDE (
+    CALCULATE ( SUM ( refile_by_type_outcome_month[closed_tickets] ),
+                refile_by_type_outcome_month[complaint_type] = "HEAT/HOT WATER",
+                refile_by_type_outcome_month[outcome] = "fixed_per_caller_unverified" ),
+    CALCULATE ( SUM ( refile_by_type_outcome_month[closed_tickets] ),
+                refile_by_type_outcome_month[complaint_type] = "HEAT/HOT WATER" ) )
+
+Heat Median Hours to Close =
+CALCULATE ( MAX ( type_speed_repeat[median_hours_to_close] ), type_speed_repeat[complaint_type] = "HEAT/HOT WATER" )
+
+Type Refile Rate =
+DIVIDE ( SUM ( type_speed_repeat[refiled_30d] ), SUM ( type_speed_repeat[closed_tickets] ) )
+
+Type Median Hours =
+MAX ( type_speed_repeat[median_hours_to_close] )
+
+Type Closed Tickets =
+SUM ( type_speed_repeat[closed_tickets] )
