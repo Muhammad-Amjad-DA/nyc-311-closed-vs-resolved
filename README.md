@@ -93,9 +93,9 @@ Three pages (Executive Overview, Repeat Complaints & Building Concentration, Clo
 - No cost data, so the impact is expressed in tickets.
 
 ## Repo map
-`sql/` pipeline in run order | 
-`python/` runner, charts, validation, Power BI export |
-`docs/` KPI definitions, data quality log, AI log | 
-`validation/` hand-check of the closing-note rules |
-`powerbi/` data, DAX and page specification |
-`images/` README visuals
+* `sql/` pipeline in run order | 
+* `python/` runner, charts, validation, Power BI export |
+* `docs/` KPI definitions, data quality log | 
+* `validation/` hand-check of the closing-note rules |
+* `powerbi/` data, DAX and page specification |
+* `images/` README visuals
