@@ -92,17 +92,6 @@ Three pages (Executive Overview, Repeat Complaints & Building Concentration, Clo
 - Observational. This does not show why a problem returned.
 - No cost data, so the impact is expressed in tickets.
 
-## How AI was used
-See [`docs/ai_log.md`](docs/ai_log.md): what AI drafted, three corrections made during validation, and the judgement calls to challenge. No language model is applied to the data itself.
-
-## Reproduce
-```
-pip install duckdb pandas matplotlib
-# download the 2025 monthly CSVs from NYC Open Data (dataset erm2-nwe9) into data/ as 311_2025_01.csv ... 311_2025_12.csv
-python python/run_analysis.py
-python python/make_charts.py
-```
-
 ## Repo map
 `sql/` pipeline in run order | `python/` runner, charts, validation and Power BI export | `docs/` KPI definitions, data quality log, AI log | `validation/` hand-check of the closing-note rules | `powerbi/` data, DAX and page specification | `images/` README visuals
 
