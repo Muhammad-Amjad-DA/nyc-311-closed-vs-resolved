@@ -54,7 +54,7 @@ A 311 dashboard shows two numbers: percent closed and median time to close. Both
 
 Heat / hot water stands out at **70.0%**, and the result is stable across windows: 52.2% within 7 days, 61.8% within 14, 70.0% within 30.
 
-**The closing method barely changes the repeat rate.** Within heat complaints, re-file rates sit between 61% and 71% whether the ticket was closed after an inspection with action (69.6%), a phone check with the caller (70.5%), no finding (64.7%) or an inspector who could not get in (60.9%). Only information-only closures are higher (88.4%). Heat tickets are also unusual in how they are closed: **45%** of in-scope closed heat tickets are closed on the caller's word that the problem was fixed, with no inspection result (3.4% of closed tickets overall). A first pooled comparison suggested caller-verified closures were worse. That was a complaint-type effect and is documented as a mistake in [`docs/ai_log.md`](docs/ai_log.md).
+**The closing method barely changes the repeat rate.** Within heat complaints, re-file rates sit between 61% and 71% whether the ticket was closed after an inspection with action (69.6%), a phone check with the caller (70.5%), no finding (64.7%) or an inspector who could not get in (60.9%). Only information-only closures are higher (88.4%). Heat tickets are also unusual in how they are closed: **45%** of in-scope closed heat tickets are closed on the caller's word that the problem was fixed, with no inspection result (3.4% of closed tickets overall).
 
 **The repeats are concentrated.**
 
@@ -93,6 +93,9 @@ Three pages (Executive Overview, Repeat Complaints & Building Concentration, Clo
 - No cost data, so the impact is expressed in tickets.
 
 ## Repo map
-`sql/` pipeline in run order | `python/` runner, charts, validation and Power BI export | `docs/` KPI definitions, data quality log, AI log | `validation/` hand-check of the closing-note rules | `powerbi/` data, DAX and page specification | `images/` README visuals
-
-*Data: NYC Open Data, 311 Service Requests from 2010 to Present. See the source page for terms of use.*
+`sql/` pipeline in run order | 
+`python/` runner, charts, validation, Power BI export |
+`docs/` KPI definitions, data quality log, AI log | 
+`validation/` hand-check of the closing-note rules |
+`powerbi/` data, DAX and page specification |
+`images/` README visuals
