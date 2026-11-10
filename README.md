@@ -99,3 +99,4 @@ Three pages (Executive Overview, Repeat Complaints & Building Concentration, Clo
 * `validation/` hand-check of the closing-note rules |
 * `powerbi/` data, DAX and page specification |
 * `images/` README visuals
+ 
